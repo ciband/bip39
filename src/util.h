@@ -20,6 +20,8 @@ inline uint32_t generate_random_number(uint32_t min, uint32_t max, bool /* stati
 
 #else
 
+#include <cstring>
+
 // Define compatibility macros for non-Arduino platforms
 #define PROGMEM
 #define PGM_P const char*
