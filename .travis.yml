@@ -45,13 +45,6 @@ matrix:
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
     - os: osx
-      osx_image: xcode9.3beta
-      env:
-        - MATRIX_EVAL=""
-        - INSTALL_SCRIPT="./.travis/install_platform_io.sh"
-        - BUILD_SCRIPT="./.travis/script_platform_io.sh"
-        
-    - os: osx
       osx_image: xcode9.2
       compiler: clang
       addons:
