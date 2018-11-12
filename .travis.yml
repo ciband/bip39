@@ -9,8 +9,8 @@ matrix:
       
       env:
         - MATRIX_EVAL=""
- #       - INSTALL_SCRIPT="./travis/install_platform_io.sh"
-#        - BUILD_SCRIPT="./travis/script_platform_io.sh"
+        - INSTALL_SCRIPT="./.travis/install_platform_io.sh"
+        - BUILD_SCRIPT="./.travis/script_platform_io.sh"
   
     - os: linux
       dist: trusty
@@ -26,8 +26,8 @@ matrix:
             
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
- #       - INSTALL_SCRIPT=""
- #       - BUILD_SCRIPT="./travis/script_desktop.sh"
+        - INSTALL_SCRIPT=""
+        - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
     - os: linux
       dist: trusty
@@ -41,15 +41,15 @@ matrix:
             - lcov
       env:
         - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
- #       - INSTALL_SCRIPT=""
- #       - BUILD_SCRIPT="./travis/script_desktop.sh"
+        - INSTALL_SCRIPT=""
+        - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
     - os: osx
       osx_image: xcode9.3beta
       env:
         - MATRIX_EVAL=""
- #       - INSTALL_SCRIPT="./travis/install_platform_io.sh"
-  #      - BUILD_SCRIPT="./travis/script_platform_io.sh"
+        - INSTALL_SCRIPT="./.travis/install_platform_io.sh"
+        - BUILD_SCRIPT="./.travis/script_platform_io.sh"
         
     - os: osx
       osx_image: xcode9.2
@@ -60,8 +60,8 @@ matrix:
             - lcov
       env:
         - COMPILER=clang++
- #       - INSTALL_SCRIPT=""
- #       - BUILD_SCRIPT="./travis/script_desktop.sh"
+        - INSTALL_SCRIPT=""
+        - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
     - os: osx
       osx_image: xcode9.3beta
@@ -71,23 +71,15 @@ matrix:
             - lcov
       env:
         - MATRIX_EVAL=""
- #       - INSTALL_SCRIPT=""
- #       - BUILD_SCRIPT="./travis/script_desktop.sh"
+        - INSTALL_SCRIPT=""
+        - BUILD_SCRIPT="./.travis/script_desktop.sh"
  
 before_install:
     - eval "${MATRIX_EVAL}"
-#    - chmod -R +x ./travis/*.sh 
+    - chmod -R +x ./travis/*.sh 
  
 #install:
-#  - ${INSTALL_SCRIPT}
-
-script:
-  - mkdir -p build/run
-  - cd build/run
-  - cmake ../.. -DCMAKE_BUILD_TYPE=Coverage
-  - make install
-  - cd ../..
-  - ./bin/bip39_tests
+  - ${INSTALL_SCRIPT}
 
 after_success:
   # Uploading report to CodeCov
