@@ -7,11 +7,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-4.0
+            - llvm-toolchain-trusty-6.0
           packages:
-            - clang-4.0
+            - clang-6.0
+            - lcov
       env:
-        - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
+        - MATRIX_EVAL="CC=clang-6.0 && CXX=clang++-6.0"
 
     # works on Trusty
     - os: linux
@@ -22,13 +23,18 @@ matrix:
             - llvm-toolchain-trusty-5.0
           packages:
             - clang-5.0
+            - lcov
       env:
         - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
 
 script:
   - mkdir -p build/run
   - cd build/run
-  - cmake ../..
+  - cmake ../.. -DCMAKE_BUILD_TYPE=Coverage
   - make install
   - cd ../..
   - ./bin/bip39_tests
+
+  after_success:
+  # Uploading report to CodeCov
+  - bash <(curl -s https://codecov.io/bash)
