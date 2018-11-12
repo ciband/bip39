@@ -10,7 +10,7 @@ set(SOURCE_FILES
 	util.cpp
 )
 
-add_library(bip39 STATIC ${SOURCE_FILES})
+add_library(bip39 SHARED STATIC ${SOURCE_FILES})
 
 install(TARGETS bip39 DESTINATION ${BIP39_INSTALL_LIB_DIR})
 install(FILES bip39.h en.h en_str.h util.h  DESTINATION ${BIP39_INSTALL_INCLUDE_DIR})
