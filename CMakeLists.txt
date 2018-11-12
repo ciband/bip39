@@ -13,6 +13,7 @@ set(BIP39_HEADERS_DIR ${PROJECT_SOURCE_DIR}/src)
 
 set(BUILD_SHARED_LIBS ON)
 
+include_directories(${BIP39_INSTALL_INCLUDE_DIR})
 include_directories(${BIP39_HEADERS_DIR})
 
 add_subdirectory(src)
