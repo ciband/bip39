@@ -35,6 +35,6 @@ script:
   - cd ../..
   - ./bin/bip39_tests
 
-  after_success:
+after_success:
   # Uploading report to CodeCov
   - bash <(curl -s https://codecov.io/bash)
