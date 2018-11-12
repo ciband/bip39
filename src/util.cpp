@@ -25,4 +25,13 @@ uint32_t generate_random_number(uint32_t min, uint32_t max, bool static_seed /* 
 	return static_seed ? generate_random_number_with_static_seed(min, max) : generate_random_number_with_fresh_seed(min, max);
 }
 
+#else
+
+#ifndef UNIT_TEST
+
+void setup() {}
+void loop() { delay(1000); }
+
+#endif
+
 #endif

@@ -358,3 +358,6 @@ ASALocalRun/
 /src/bip39.sln
 /src/ALL_BUILD.vcxproj.filters
 /src/ALL_BUILD.vcxproj
+/.pioenvs
+/test/.pioenvs
+/src/.pioenvs
