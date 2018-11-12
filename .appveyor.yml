@@ -1,0 +1,20 @@
+version: 0.0.{build}
+
+image: Visual Studio 2017
+
+environment:
+  matrix:
+  - CONFIGURATION: Debug
+  - CONFIGURATION: Release
+  
+install:
+    - git submodule update --init --recursive
+
+before_build:
+    - cmake -G "Visual Studio 15 2017" .
+
+build:
+  project: $(APPVEYOR_BUILD_FOLDER)\bip39.sln
+    
+test_script:
+- cmd: '%APPVEYOR_BUILD_FOLDER%\Bin\%CONFIGURATION%\bip39-tests.exe'
