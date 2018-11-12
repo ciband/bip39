@@ -78,8 +78,11 @@ before_install:
     - eval "${MATRIX_EVAL}"
     - chmod -R +x ./.travis/*.sh 
  
-#install:
+install:
   - ${INSTALL_SCRIPT}
+
+script:
+  - ${BUILD_SCRIPT}
 
 after_success:
   # Uploading report to CodeCov
