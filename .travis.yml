@@ -76,7 +76,7 @@ matrix:
  
 before_install:
     - eval "${MATRIX_EVAL}"
-    - chmod -R +x ./travis/*.sh 
+    - chmod -R +x ./.travis/*.sh 
  
 #install:
   - ${INSTALL_SCRIPT}
