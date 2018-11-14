@@ -6,3 +6,5 @@ AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/65u86i7vc
 
 ## About
 This is a portable C++ implementation of BIP39.  The goal of this project is to provide a BIP39 implementation with minimal dependencies and to be compatiable with the most number of platforms, including Arduino.
+
+This project was heavily inspired by and code borrowed from libbitcoin (https://github.com/libbitcoin/libbitcoin).
