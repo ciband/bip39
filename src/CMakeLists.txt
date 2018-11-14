@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.2)
 project(bip39 C CXX)
 
+include_directories(lib/PicoSHA2)
+
 set(SOURCE_FILES
     bip39.h
     bip39.cpp

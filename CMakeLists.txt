@@ -24,6 +24,12 @@ endif()
 include_directories(${BIP39_INSTALL_INCLUDE_DIR})
 include_directories(${BIP39_HEADERS_DIR})
 
+# clone submodules
+execute_process(
+	COMMAND git submodule update --init
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
+
 add_subdirectory(src)
 add_subdirectory(test)
 
