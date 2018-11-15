@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "bip39.h"
+#include "util.h"
 
 #include <cstring>
 #include <set>
@@ -31,25 +32,38 @@ TEST(crypto_bip39, generate_mnemonic) {
 }
 
 TEST(crypto_bip39, validate_mnemonic__invalid) {
-    /*
+    const std::vector<std::string> invalid_mnemonic_tests
+    {
+        // Spelling error:
+        "abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,aboot",
+
+        // Bad lengths:
+        "one",
+        "one,two",
+        "abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon",
+
+        // Bad checksum:
+        "abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,one",
+    };
+
+    
     for (const auto& mnemonic: invalid_mnemonic_tests)
     {
-        const auto words = split(mnemonic, ",");
-        BOOST_REQUIRE(!validate_mnemonic(words));
+        const auto words = BIP39::split(mnemonic, ',');
+        ASSERT_FALSE(BIP39::valid_mnemonic(words));
     }
-    */
 }
 
-TEST(crypto_bip39, generate_mnemonic__tiny) {
+TEST(crypto_bip39, create_mnemonic__tiny) {
     std::vector<uint8_t> entropy(4, 0xa9);
-    const auto mnemonic = BIP39::generate_mnemonic(entropy);
+    const auto mnemonic = BIP39::create_mnemonic(entropy);
     ASSERT_EQ(3u, mnemonic.size());
     ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
 }
 
-TEST(crypto_bip39, generate_mnemonic__giant) {
+TEST(crypto_bip39, create_mnemonic__giant) {
     std::vector<uint8_t> entropy(1024, 0xa9);
-    const auto mnemonic = BIP39::generate_mnemonic(entropy);
+    const auto mnemonic = BIP39::create_mnemonic(entropy);
     ASSERT_EQ(768u, mnemonic.size());
     ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
 }

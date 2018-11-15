@@ -1,7 +1,10 @@
 #ifndef BIP39_UTIL_H
 #define BIP39_UTIL_H
 
+#include "word_list.h"
+
 #include <cstdint>
+#include <string>
 
 #define STRING_VAR_DECL(s) const char s##_str[] PROGMEM = #s;
 
@@ -13,10 +16,6 @@
 
 #include <Arduino.h>
 #include <pgmspace.h>
-
-inline uint32_t generate_random_number(uint32_t min, uint32_t max, bool /* static_seed */ = false) {
-	return random(min, max);
-}
 
 // Workaround issue: https://github.com/esp8266/Arduino/issues/2078
 #ifdef ESP8266
@@ -35,8 +34,12 @@ inline uint32_t generate_random_number(uint32_t min, uint32_t max, bool /* stati
 #define pgm_read_ptr_far(p) (*p)
 #define strcpy_P strcpy
 
-uint32_t generate_random_number(uint32_t min, uint32_t max, bool static_seed = false);
-
 #endif
 
 #endif
+
+namespace BIP39 {
+
+word_list split(const std::string& s, char delimiter);
+
+}

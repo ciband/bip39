@@ -60,7 +60,7 @@ void append_checksum_bits(std::vector<uint8_t>& entropyBuffer) {
 
 }
 
-word_list generate_mnemonic(std::vector<uint8_t>& entropy, language lang /* = language::en */) {
+word_list create_mnemonic(std::vector<uint8_t>& entropy, language lang /* = language::en */) {
     const size_t entropy_bits = (entropy.size() * BYTE_BITS);
     const size_t check_bits = (entropy_bits / ENTROPY_BIT_DIVISOR);
     const size_t total_bits = (entropy_bits + check_bits);
@@ -105,9 +105,9 @@ word_list generate_mnemonic(entropy_bits_t entropy /* = entropy_bits::_128 */, l
     assert((word_count % MNEMONIC_WORD_MULTIPLE) == 0);
 
     random_bytes_engine rbe;
-    std::vector<uint8_t> data(entropy_bits / 8);
+    std::vector<uint8_t> data(entropy_bits / BYTE_BITS);
     std::generate(begin(data), end(data), [&rbe]() { return static_cast<uint8_t>(std::ref(rbe)()); });
-    return generate_mnemonic(data, lang);
+    return create_mnemonic(data, lang);
 }
 
 void mnemonicToSeedHex(const word_list& mnemonic, const std::string& password /* = ""*/) {
@@ -147,7 +147,7 @@ bool valid_mnemonic(const word_list& words, language lang /* = language::en */) 
     }
 
     data.resize(entropy_bits / BYTE_BITS);
-    const auto mnemonic = generate_mnemonic(data, lang);
+    const auto mnemonic = create_mnemonic(data, lang);
     return std::equal(mnemonic.begin(), mnemonic.end(), words.begin());
 }
 
