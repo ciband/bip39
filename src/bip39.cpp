@@ -33,7 +33,7 @@ uint8_t bip39_shift(size_t bit)
 }
 
 int get_word_index(const char* const * const lexicon, const std::string& word) {
-    for (auto i = 0; i < NUM_BIP39_WORDS; ++i) {
+    for (auto i = 0u; i < NUM_BIP39_WORDS; ++i) {
         char w[MAX_BIP39_WORD_LENGTH] = {};
         strcpy_P(w, (char*)pgm_read_ptr_far(&(lexicon[i])));
         if (strcmp(w, word.c_str()) == 0) {

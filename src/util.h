@@ -18,6 +18,12 @@ inline uint32_t generate_random_number(uint32_t min, uint32_t max, bool /* stati
 	return random(min, max);
 }
 
+// Workaround issue: https://github.com/esp8266/Arduino/issues/2078
+#ifdef ESP8266
+#undef PSTR
+#define PSTR(s) (s)
+#endif
+
 #else
 
 #include <cstring>
