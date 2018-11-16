@@ -2,9 +2,23 @@
 
 #include "bip39.h"
 #include "util.h"
+#include "hex.h"
 
 #include <cstring>
 #include <set>
+
+namespace {
+struct mnemonic_result
+{
+    std::string entropy;
+    std::string mnemonic;
+    std::string passphrase;
+    std::string seed;
+    BIP39::language language;
+};
+
+typedef std::vector<mnemonic_result> mnemonic_result_list;
+}
 
 TEST(crypto_bip39, generate_mnemonic) {
 	auto passphrase = BIP39::generate_mnemonic(BIP39::entropy_bits_t::_256, BIP39::language::en);
@@ -51,6 +65,65 @@ TEST(crypto_bip39, validate_mnemonic__invalid) {
     {
         const auto words = BIP39::split(mnemonic, ',');
         ASSERT_FALSE(BIP39::valid_mnemonic(words));
+    }
+}
+
+TEST(crypto_bip39, create_mnemonic__bx) {
+    const mnemonic_result_list mnemonic_bx_new_vectors
+    {
+        {
+            {
+                "baadf00dbaadf00d",
+                "rival,hurdle,address,inspire,tenant,alone",
+                "",
+                "",
+                BIP39::language::en
+            },
+            {
+                "baadf00dbaadf00dbaadf00dbaadf00d",
+                "rival,hurdle,address,inspire,tenant,almost,turkey,safe,asset,step,lab,boy",
+                "",
+                "",
+                BIP39::language::en
+            }/*,
+            {
+                "baadf00dbaadf00dbaadf00dbaadf00d",
+                "previo,humilde,actuar,jarabe,tabique,ahorro,tope,pulpo,anís,señal,lavar,bahía",
+                "",
+                "",
+                BIP39::language::es
+            },
+            {
+                "baadf00dbaadf00dbaadf00dbaadf00d",
+                "ねんかん,すずしい,あひる,せたけ,ほとんど,あんまり,めいあん,のべる,いなか,ふとる,ぜんりゃく,えいせい",
+                "",
+                "",
+                BIP39::language::ja
+            },
+            {
+                "baadf00dbaadf00dbaadf00dbaadf00d",
+                "博,肉,地,危,惜,多,陪,荒,因,患,伊,基",
+                "",
+                "",
+                BIP39::language::zh_Hans
+            },
+            {
+                "baadf00dbaadf00dbaadf00dbaadf00d",
+                "博,肉,地,危,惜,多,陪,荒,因,患,伊,基",
+                "",
+                "",
+                BIP39::language::zh_Hant
+            }*/
+        }
+    };
+
+    for (const auto& vector : mnemonic_bx_new_vectors)
+    {
+        std::vector<uint8_t> entropy = BIP39::HexToBytes(vector.entropy.c_str());
+        const auto mnemonic = create_mnemonic(entropy, vector.language);
+        ASSERT_TRUE(mnemonic.size() > 0);
+        ASSERT_EQ(BIP39::join(mnemonic.begin(), mnemonic.end(), ","), vector.mnemonic);
+        ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
     }
 }
 

@@ -42,4 +42,18 @@ namespace BIP39 {
 
 word_list split(const std::string& s, char delimiter);
 
+template <typename InputIt>
+std::string join(InputIt begin, InputIt end, const std::string& separator) {
+    std::ostringstream ss;
+
+    for (auto it = begin; it != end; ++it) {
+        ss << *it;
+        if (it + 1 != end) {
+            ss << separator;
+        }
+    }
+    
+    return ss.str();
+}
+
 }
