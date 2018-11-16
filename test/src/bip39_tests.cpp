@@ -81,7 +81,7 @@ TEST(bip39, create_mnemonic__trezor)
         std::vector<uint8_t> entropy = BIP39::HexToBytes(vector.entropy.c_str());
         const auto mnemonic = BIP39::create_mnemonic(entropy, vector.language);
         ASSERT_TRUE(mnemonic.size() > 0);
-        ASSERT_EQ(BIP39::join(mnemonic.begin(), mnemonic.end(), ",").c_str(), vector.mnemonic.c_str());
+        ASSERT_STREQ(BIP39::join(mnemonic.begin(), mnemonic.end(), ",").c_str(), vector.mnemonic.c_str());
         ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
     }
 }
