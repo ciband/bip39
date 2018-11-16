@@ -110,8 +110,8 @@ word_list generate_mnemonic(entropy_bits_t entropy /* = entropy_bits::_128 */, l
     return create_mnemonic(data, lang);
 }
 
-void mnemonicToSeedHex(const word_list& mnemonic, const std::string& password /* = ""*/) {
-
+std::vector<uint8_t> decode_mnemonic(const word_list& mnemonic, const std::string& password /* = "" */) {
+    return std::vector<uint8_t>();
 }
 
 bool valid_mnemonic(const word_list& words, language lang /* = language::en */) {

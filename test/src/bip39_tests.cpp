@@ -1,26 +1,13 @@
 #include "gtest/gtest.h"
 
-#include "bip39.h"
+#include "bip39_tests.h"
 #include "util.h"
 #include "hex.h"
 
 #include <cstring>
 #include <set>
 
-namespace {
-struct mnemonic_result
-{
-    std::string entropy;
-    std::string mnemonic;
-    std::string passphrase;
-    std::string seed;
-    BIP39::language language;
-};
-
-typedef std::vector<mnemonic_result> mnemonic_result_list;
-}
-
-TEST(crypto_bip39, generate_mnemonic) {
+TEST(bip39, generate_mnemonic) {
 	auto passphrase = BIP39::generate_mnemonic(BIP39::entropy_bits_t::_256, BIP39::language::en);
 	std::set<std::string> words;
 	char s[256] = {};
@@ -45,22 +32,41 @@ TEST(crypto_bip39, generate_mnemonic) {
 	ASSERT_EQ(12, words.size());
 }
 
-TEST(crypto_bip39, validate_mnemonic__invalid) {
-    const std::vector<std::string> invalid_mnemonic_tests
+#if 0
+TEST(bip39, decode_mnemonic__no_passphrase) {
+    for (const auto& vector : mnemonic_no_passphrase) {
+        const auto words = BIP39::split(vector.mnemonic, ',');
+        ASSERT_TRUE(BIP39::valid_mnemonic(words, vector.language));
+        const auto seed = BIP39::decode_mnemonic(words);
+        ASSERT_STRCASEEQ(BIP39::BytesToHex(seed).c_str(), vector.seed.c_str());
+    }
+}
+
+TEST(bip39, decode_mnemonic__trezor)
+{
+    for (const auto& vector : mnemonic_trezor_vectors)
     {
-        // Spelling error:
-        "abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,aboot",
+        const auto words = BIP39::split(vector.mnemonic, ',');
+        ASSERT_TRUE(BIP39::valid_mnemonic(words, vector.language));
+        const auto seed = BIP39::decode_mnemonic(words);
+        ASSERT_STRCASEEQ(BIP39::BytesToHex(seed).c_str(), vector.seed.c_str());
+    }
+}
 
-        // Bad lengths:
-        "one",
-        "one,two",
-        "abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon",
+TEST(bip39, decode_mnemonic__bx)
+{
+    for (const auto& vector : mnemonic_bx_to_seed_vectors)
+    {
+        const auto words = BIP39::split(vector.mnemonic, ',');
+        ASSERT_TRUE(BIP39::valid_mnemonic(words, vector.language));
+        const auto seed = BIP39::decode_mnemonic(words);
+        ASSERT_STRCASEEQ(BIP39::BytesToHex(seed).c_str(), vector.seed.c_str());
+    }
+}
 
-        // Bad checksum:
-        "abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,abandon,one",
-    };
+#endif
 
-    
+TEST(bip39, validate_mnemonic__invalid) {
     for (const auto& mnemonic: invalid_mnemonic_tests)
     {
         const auto words = BIP39::split(mnemonic, ',');
@@ -68,73 +74,37 @@ TEST(crypto_bip39, validate_mnemonic__invalid) {
     }
 }
 
-TEST(crypto_bip39, create_mnemonic__bx) {
-    const mnemonic_result_list mnemonic_bx_new_vectors
-    {
-        {
-            {
-                "baadf00dbaadf00d",
-                "rival,hurdle,address,inspire,tenant,alone",
-                "",
-                "",
-                BIP39::language::en
-            },
-            {
-                "baadf00dbaadf00dbaadf00dbaadf00d",
-                "rival,hurdle,address,inspire,tenant,almost,turkey,safe,asset,step,lab,boy",
-                "",
-                "",
-                BIP39::language::en
-            }/*,
-            {
-                "baadf00dbaadf00dbaadf00dbaadf00d",
-                "previo,humilde,actuar,jarabe,tabique,ahorro,tope,pulpo,anís,señal,lavar,bahía",
-                "",
-                "",
-                BIP39::language::es
-            },
-            {
-                "baadf00dbaadf00dbaadf00dbaadf00d",
-                "ねんかん,すずしい,あひる,せたけ,ほとんど,あんまり,めいあん,のべる,いなか,ふとる,ぜんりゃく,えいせい",
-                "",
-                "",
-                BIP39::language::ja
-            },
-            {
-                "baadf00dbaadf00dbaadf00dbaadf00d",
-                "博,肉,地,危,惜,多,陪,荒,因,患,伊,基",
-                "",
-                "",
-                BIP39::language::zh_Hans
-            },
-            {
-                "baadf00dbaadf00dbaadf00dbaadf00d",
-                "博,肉,地,危,惜,多,陪,荒,因,患,伊,基",
-                "",
-                "",
-                BIP39::language::zh_Hant
-            }*/
-        }
-    };
-
-    for (const auto& vector : mnemonic_bx_new_vectors)
+TEST(bip39, create_mnemonic__trezor)
+{
+    for (const mnemonic_result& vector : mnemonic_trezor_vectors)
     {
         std::vector<uint8_t> entropy = BIP39::HexToBytes(vector.entropy.c_str());
-        const auto mnemonic = create_mnemonic(entropy, vector.language);
+        const auto mnemonic = BIP39::create_mnemonic(entropy, vector.language);
         ASSERT_TRUE(mnemonic.size() > 0);
-        ASSERT_EQ(BIP39::join(mnemonic.begin(), mnemonic.end(), ","), vector.mnemonic);
+        ASSERT_EQ(BIP39::join(mnemonic.begin(), mnemonic.end(), ",").c_str(), vector.mnemonic.c_str());
         ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
     }
 }
 
-TEST(crypto_bip39, create_mnemonic__tiny) {
+TEST(bip39, create_mnemonic__bx) {
+    for (const auto& vector : mnemonic_bx_new_vectors)
+    {
+        std::vector<uint8_t> entropy = BIP39::HexToBytes(vector.entropy.c_str());
+        const auto mnemonic = BIP39::create_mnemonic(entropy, vector.language);
+        ASSERT_TRUE(mnemonic.size() > 0);
+        ASSERT_STREQ(BIP39::join(mnemonic.begin(), mnemonic.end(), ",").c_str(), vector.mnemonic.c_str());
+        ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
+    }
+}
+
+TEST(bip39, create_mnemonic__tiny) {
     std::vector<uint8_t> entropy(4, 0xa9);
     const auto mnemonic = BIP39::create_mnemonic(entropy);
     ASSERT_EQ(3u, mnemonic.size());
     ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
 }
 
-TEST(crypto_bip39, create_mnemonic__giant) {
+TEST(bip39, create_mnemonic__giant) {
     std::vector<uint8_t> entropy(1024, 0xa9);
     const auto mnemonic = BIP39::create_mnemonic(entropy);
     ASSERT_EQ(768u, mnemonic.size());

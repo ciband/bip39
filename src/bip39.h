@@ -43,7 +43,7 @@ enum class language : uint8_t {
 word_list generate_mnemonic(entropy_bits_t entropy = entropy_bits_t::_128, language lang = language::en);
 word_list create_mnemonic(std::vector<uint8_t>& entropy, language lang = language::en);
 
-void mnemonicToSeedHex(const word_list& mnemonic, const std::string& password = "");
+std::vector<uint8_t> decode_mnemonic(const word_list& mnemonic, const std::string& password = "");
 
 bool valid_mnemonic(const word_list& mnemonic, language lang = language::en);
 
