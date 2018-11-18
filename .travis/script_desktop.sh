@@ -3,4 +3,4 @@ cmake . -DCMAKE_BUILD_TYPE=Coverage
 cmake --build .
 
 # run Gtest
-./test/bip39_tests
+./test/bip39_test
