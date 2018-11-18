@@ -23,3 +23,14 @@ add_subdirectory(${CMAKE_BINARY_DIR}/googletest-src
 add_executable(bip39_test src/main.cpp src/bip39_tests.cpp)
 target_compile_features(bip39_test PRIVATE cxx_auto_type)
 target_link_libraries(bip39_test gtest_main bip39::bip39)
+
+install(TARGETS bip39_test DESTINATION ${CMAKE_BINARY_DIR})
+
+if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
+    include("${CMAKE_SOURCE_DIR}/cmake/CodeCoverage.cmake")
+
+    setup_target_for_coverage(${PROJECT_NAME}_coverage bip39_test coverage)
+
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
+    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
+endif() #CMAKE_BUILD_TYPE STREQUAL "Coverage"

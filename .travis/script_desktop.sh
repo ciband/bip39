@@ -1,9 +1,6 @@
 # run desktop builds
 cmake . -DCMAKE_BUILD_TYPE=Coverage
-cmake --build .
-
-# install
-make install
+cmake --build . --target install
 
 # run Gtest
-./bin/bip39_tests
+./test/Debug/bip39_tests

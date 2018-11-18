@@ -372,3 +372,5 @@ ASALocalRun/
 /bip39.vcxproj.filters
 /bip39.vcxproj
 /bip39.sln
+/bip39Config.cmake
+/install_manifest.txt

@@ -3,6 +3,9 @@ project(bip39 VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 
+set(CMAKE_BINARY_DIR ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_INSTALL_LIBDIR ${PROJECT_SOURCE_DIR}/lib)
+
 #Make sure that custom modules like FindRapidJSON are found
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
 
@@ -90,7 +93,7 @@ write_basic_package_version_file(
 )
 
 configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/bip39Config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/bip39onfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/bip39Config.cmake
     INSTALL_DESTINATION ${INSTALL_CONFIGDIR}
 )
 
