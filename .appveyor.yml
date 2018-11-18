@@ -14,7 +14,7 @@ before_build:
     - cmake -G "Visual Studio 15 2017" .
 
 build:
-  project: $(APPVEYOR_BUILD_FOLDER)\Project.sln
+  project: $(APPVEYOR_BUILD_FOLDER)\bip39.sln
     
 test_script:
 - cmd: '%APPVEYOR_BUILD_FOLDER%\test\%CONFIGURATION%\bip39_tests.exe'
