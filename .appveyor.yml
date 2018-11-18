@@ -17,4 +17,4 @@ build:
   project: $(APPVEYOR_BUILD_FOLDER)\bip39.sln
     
 test_script:
-- cmd: '%APPVEYOR_BUILD_FOLDER%\test\%CONFIGURATION%\bip39_tests.exe'
+- cmd: '%APPVEYOR_BUILD_FOLDER%\test\%CONFIGURATION%\bip39_test.exe'
