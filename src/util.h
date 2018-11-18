@@ -1,7 +1,7 @@
 #ifndef BIP39_UTIL_H
 #define BIP39_UTIL_H
 
-#include "word_list.h"
+#include "bip39/word_list.h"
 
 #include <cstdint>
 #include <string>
@@ -37,23 +37,3 @@
 #endif
 
 #endif
-
-namespace BIP39 {
-
-word_list split(const std::string& s, char delimiter);
-
-template <typename InputIt>
-std::string join(InputIt begin, InputIt end, const std::string& separator) {
-    std::string s;
-
-    for (auto it = begin; it != end; ++it) {
-        s += *it;
-        if (it + 1 != end) {
-            s += separator;
-        }
-    }
-    
-    return s;
-}
-
-}

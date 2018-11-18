@@ -19,10 +19,10 @@
 
 // Modified by ciband for the BIP39 project
 
-#ifndef BIP39_BIP39_TESTS_H
-#define BIP39_BIP39_TESTS_H
+#ifndef BIP39_TESTS_BIP39_TESTS_H
+#define BIP39_TESTS_BIP39_TESTS_H
 
-#include "bip39.h"
+#include "bip39/bip39.h"
 
 #include <string>
 #include <vector>

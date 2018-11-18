@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  **/
 
-#ifndef BIP39_HEX_H
-#define BIP39_HEX_H
+#ifndef BIP39_TESTS_HEX_H
+#define BIP39_TESTS_HEX_H
 
 #include <string>
 #include <vector>
