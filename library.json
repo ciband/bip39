@@ -1,0 +1,24 @@
+{
+    "name": "bip39",
+    "keywords": "bip39, bitcoin",
+    "description": "This is a portable C++ implementation of BIP39. The goal of this project is to provide a BIP39 implementation with minimal dependencies and to be compatiable with the most number of platforms, including Arduino.",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ciband/bip39.git"
+    },
+    "authors": {
+        "name": "Chris Johnson",
+        "url": "https://github.com/ciband/bip39"
+    },
+    "dependencies": {
+
+    },
+    "version": "1.0.0",
+    "downloadUrl": "https://github.com/ciband/bip39/archive/v1.0.zip",
+    "frameworks": "arduino",
+    "platforms": [
+        "native",
+        "Espressif 32",
+        "Espressif 8266"
+    ]
+}
