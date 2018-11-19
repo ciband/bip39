@@ -7,9 +7,8 @@ set(CMAKE_BINARY_DIR ${PROJECT_SOURCE_DIR}/bin)
 set(CMAKE_INSTALL_LIBDIR ${PROJECT_SOURCE_DIR}/lib)
 set(PicoSHA2_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src/lib/PicoSHA2)
 
-#Make sure that custom modules like PicoSHA2 are found
-list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
-
+#Make sure that custom modules are found
+list(INSERT CMAKE_MODULE_PATH 0 ${PROJECT_SOURCE_DIR}/cmake)
 
 if (MSVC)
 	add_definitions(
@@ -34,11 +33,15 @@ add_library(bip39 SHARED STATIC ${SOURCE_FILES})
 #Add an alias so that library can be used inside the build tree, e.g. when testing
 add_library(bip39::bip39 ALIAS bip39)
 
+include_directories(
+    ${PROJECT_SOURCE_DIR}/include
+)
+
 #Set target properties
 target_include_directories(bip39
     PUBLIC
         $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${PicoSHA2_INCLUDE_DIR}
