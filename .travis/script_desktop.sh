@@ -6,4 +6,4 @@ cmake --build .
 make install
 
 # run Gtest
-./bin/bip39_tests
+./test/bip39_tests
