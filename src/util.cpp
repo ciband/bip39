@@ -17,22 +17,28 @@ void loop() { delay(1000); }
 // https://github.com/esp8266/Arduino/issues/3358
 namespace std {
 
-    void __throw_bad_cast(void)
-    {
-        panic();
-    }
+#ifndef __throw_bad_cast
+void __throw_bad_cast(void)
+{
+    panic();
+}
+#endif
 
-    void __throw_ios_failure(const char* str)
-    {
-        (void)str;
-        panic();
-    }
+#ifndef __throw_ios_failure
+void __throw_ios_failure(const char* str)
+{
+    (void)str;
+    panic();
+}
+#endif
 
-    void __throw_runtime_error(const char* str)
-    {
-        (void)str;
-        panic();
-    }
+#ifndef __throw_runtime_error
+void __throw_runtime_error(const char* str)
+{
+    (void)str;
+    panic();
+}
+#endif
 
 }
 #endif
