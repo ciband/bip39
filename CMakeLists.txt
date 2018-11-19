@@ -5,8 +5,9 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_BINARY_DIR ${PROJECT_SOURCE_DIR}/bin)
 set(CMAKE_INSTALL_LIBDIR ${PROJECT_SOURCE_DIR}/lib)
+set(PicoSHA2_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src/lib/PicoSHA2)
 
-#Make sure that custom modules like FindRapidJSON are found
+#Make sure that custom modules like PicoSHA2 are found
 list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
 
 
@@ -20,10 +21,6 @@ if (MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif()
-
-##############################################
-# Declare dependencies
-find_package(PicoSHA2 REQUIRED MODULE)
 
 ##############################################
 # Create target and set properties
@@ -99,7 +96,6 @@ configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/bip39Config.cmake.
 
 #Install the config, configversion and custom find modules
 install(FILES
-    ${CMAKE_CURRENT_LIST_DIR}/cmake/FindPicoSHA2.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/bip39Config.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/bip39ConfigVersion.cmake
     DESTINATION ${INSTALL_CONFIGDIR}
@@ -107,9 +103,6 @@ install(FILES
 
 ##############################################
 ## Exporting from the build tree
-configure_file(${CMAKE_CURRENT_LIST_DIR}/cmake/FindPicoSHA2.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/FindPicoSHA2.cmake
-    COPYONLY)
 
 export(EXPORT bip39-targets FILE ${CMAKE_CURRENT_BINARY_DIR}/bip39Targets.cmake NAMESPACE bip39::)
 
