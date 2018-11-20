@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 project(bip39_tests C CXX)
 
-set(BUILD_GMOCK OFF ForCE)
+set(BUILD_GMOCK OFF FORCE)
 
 add_subdirectory(lib/googletest)
 
