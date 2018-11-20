@@ -22,7 +22,7 @@
 #ifndef BIP39_BIP39_TESTS_H
 #define BIP39_BIP39_TESTS_H
 
-#include "bip39.h"
+#include "bip39/bip39.h"
 
 #include <string>
 #include <vector>

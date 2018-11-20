@@ -1,4 +1,4 @@
-#include "bip39.h"
+#include "bip39/bip39.h"
 #include "en.h"
 
 #include "picosha2.h"

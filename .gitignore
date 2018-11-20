@@ -328,7 +328,7 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
-/include
+
 /lib
 /CMakeFiles
 /src/CMakeFiles
@@ -361,3 +361,13 @@ ASALocalRun/
 /.pioenvs
 /test/.pioenvs
 /src/.pioenvs
+/build
+/example/CMakeFiles
+/example/INSTALL.vcxproj.filters
+/example/INSTALL.vcxproj
+/example/cmake_install.cmake
+/example/bip39_example.vcxproj.filters
+/example/bip39_example.vcxproj
+/example/bip39_example.sln
+/example/ALL_BUILD.vcxproj.filters
+/example/ALL_BUILD.vcxproj

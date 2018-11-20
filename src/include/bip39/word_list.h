@@ -17,6 +17,8 @@ private:
     data_type _words;
 
 public:
+    word_list() = default;
+
     void add(std::string word) {
         _words.emplace_back(std::move(word));
     }
@@ -40,6 +42,11 @@ public:
     iterator begin() { return _words.begin(); }
     iterator end() { return _words.end(); }
 };
+
+inline std::ostream& operator<<(std::ostream& os, const word_list& list) {
+    os << list.to_string();
+    return os;
+}
 
 }
 

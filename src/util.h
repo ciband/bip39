@@ -1,7 +1,7 @@
 #ifndef BIP39_UTIL_H
 #define BIP39_UTIL_H
 
-#include "word_list.h"
+#include "bip39/word_list.h"
 
 #include <cstdint>
 #include <string>
