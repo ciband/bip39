@@ -4,12 +4,18 @@ project(bip39 C CXX)
 include_directories(lib/PicoSHA2)
 
 set(SOURCE_FILES
-    bip39.h
     bip39.cpp
-	en.h
-	en_str.h
-	util.h
 	util.cpp
 )
 
-add_library(bip39 SHARED STATIC ${SOURCE_FILES})
+add_library(${PROJECT_NAME} SHARED STATIC ${SOURCE_FILES})
+
+set(bip39_build_include_dirs
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/include
+)
+include_directories(${bip39_build_include_dirs})
+
+target_include_directories( ${PROJECT_NAME}
+    PUBLIC ${bip39_build_include_dirs}
+)
