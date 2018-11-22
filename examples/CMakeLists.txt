@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(bip39_example)
+project(bip39_example C CXX)
 
 find_library(bip39 PUBLIC)
 

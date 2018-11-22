@@ -23,5 +23,5 @@ execute_process(
 
 add_subdirectory(src)
 add_subdirectory(test)
-add_subdirectory(example)
+add_subdirectory(examples)
 
