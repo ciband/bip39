@@ -47,6 +47,8 @@ enum class language : uint8_t {
     zh_Hant
 };
 
+const char* const * get_string_table(language lang);
+
 word_list generate_mnemonic(entropy_bits_t entropy = entropy_bits_t::_128, language lang = language::en);
 word_list create_mnemonic(std::vector<uint8_t>& entropy, language lang = language::en);
 

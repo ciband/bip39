@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     };
 
     // read the dictionary files into memory
-    std::map<BIP39::language, std::array<std::string, 2048>> word_lists;
+    std::map<BIP39::language, std::array<std::string, BIP39::NUM_BIP39_WORDS>> word_lists;
     for (const auto& file : fs::directory_iterator(word_lists_dir)) {
         auto it = std::find_if(language_map.begin(), language_map.end(), [&file] (const auto& l) {
             return strcmp(l.first, file.path().stem().string().c_str()) == 0;
@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
         }
         const auto lang = it->second;
         std::ifstream file_stream(file.path().string());
-        for (auto i = 0; file_stream && i < 2048; ++i) {
+        for (auto i = 0; file_stream && i < BIP39::NUM_BIP39_WORDS; ++i) {
             file_stream >> word_lists[lang][i];
         }
     }
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
         lang_h_stream << "#include " << lang_str_h.filename() << "\n";
         lang_h_stream << '\n';
         lang_h_stream << "const char* const " << it->first << "_table[] PROGMEM = {\n";
-        for (word_index = 0; word_index < 2048; ++word_index) {
+        for (word_index = 0; word_index < BIP39::NUM_BIP39_WORDS; ++word_index) {
             lang_h_stream << "\t" << it->first << '_' << word_index << "_str,\n";
         }
         lang_h_stream << "};\n";

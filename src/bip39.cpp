@@ -22,8 +22,6 @@ namespace BIP39 {
 using random_bytes_engine = std::independent_bits_engine<
     std::default_random_engine, 16, uint16_t>;
 
-namespace {
-
 const char* const * get_string_table(language lang) {
 	switch (lang) {
 	case language::en: return english_table;
@@ -40,6 +38,8 @@ const char* const * get_string_table(language lang) {
 		return nullptr;
 	};
 }
+
+namespace {
 
 uint8_t bip39_shift(size_t bit)
 {

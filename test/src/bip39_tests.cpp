@@ -4,6 +4,7 @@
 #include "util.h"
 #include "hex.h"
 
+#include <algorithm>
 #include <cstring>
 #include <set>
 
@@ -110,114 +111,111 @@ TEST(bip39, create_mnemonic__giant) {
     ASSERT_EQ(768u, mnemonic.size());
     ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
 }
-#if 0
-TEST(BIP39, create_mnemonic__japanese)
-{
-    for (const mnemonic_result& vector : mnemonic_japanese_vectors)
-    {
-        BOOST_REQUIRE(vector.entropy.size() % 2 == 0);
-        data_chunk entropy;
-        decode_base16(entropy, vector.entropy);
-        const auto mnemonic = create_mnemonic(entropy, vector.language);
-        BOOST_REQUIRE(mnemonic.size() > 0);
-        BOOST_REQUIRE_EQUAL(join(mnemonic, ","), vector.mnemonic);
-        BOOST_REQUIRE(validate_mnemonic(mnemonic));
-    }
-}
 
 TEST(BIP39, dictionary__en_es__no_intersection)
 {
-    const auto& english = language::en;
-    const auto& spanish = language::es;
-    size_t intersection = 0;
-    for (const auto es : spanish)
+    const auto english = BIP39::get_string_table(BIP39::language::en);
+    const auto spanish = BIP39::get_string_table(BIP39::language::es);
+    auto intersection = 0u;
+    for( auto i = 0ul; i < BIP39::NUM_BIP39_WORDS; ++i) 
     {
-        std::string test(es);
-        const auto it = std::find(english.begin(), english.end(), test);
-        if (it != std::end(english))
-            intersection++;
+        const auto test = spanish[i];
+        const auto it = std::find_if(english, english + BIP39::NUM_BIP39_WORDS, [test] (const char* const word) {
+            return strcmp(test, word) == 0;
+        });
+        if (it != english + BIP39::NUM_BIP39_WORDS) {
+            ++intersection;
+        }
     }
-
-    BOOST_REQUIRE_EQUAL(intersection, 0u);
+    ASSERT_EQ(0u, intersection);
 }
 
 TEST(BIP39, dictionary__en_it__no_intersection)
 {
-    const auto& english = language::en;
-    const auto& italian = language::it;
-    size_t intersection = 0;
-    for (const auto it : italian)
+    const auto english = BIP39::get_string_table(BIP39::language::en);
+    const auto italian = BIP39::get_string_table(BIP39::language::it);
+    auto intersection = 0u;
+    for (auto i = 0ul; i < BIP39::NUM_BIP39_WORDS; ++i)
     {
-        std::string test(it);
-        const auto iter = std::find(english.begin(), english.end(), test);
-        if (iter != std::end(english))
-            intersection++;
+        const auto test = italian[i];
+        const auto it = std::find_if(english, english + BIP39::NUM_BIP39_WORDS, [test] (const char* const word) {
+            return strcmp(test, word) == 0;
+        });
+        if (it != english + BIP39::NUM_BIP39_WORDS) {
+            ++intersection;
+        }
     }
-
-    BOOST_REQUIRE_EQUAL(intersection, 0u);
+    ASSERT_EQ(0u, intersection);
 }
 
 TEST(BIP39, dictionary__fr_es__no_intersection)
 {
-    const auto& french = language::fr;
-    const auto& spanish = language::es;
-    size_t intersection = 0;
-    for (const auto es : spanish)
+    const auto french = BIP39::get_string_table(BIP39::language::fr);
+    const auto spanish = BIP39::get_string_table(BIP39::language::es);
+    auto intersection = 0u;
+    for (auto i = 0ul; i < BIP39::NUM_BIP39_WORDS; ++i)
     {
-        std::string test(es);
-        const auto it = std::find(french.begin(), french.end(), test);
-        if (it != std::end(french))
-            intersection++;
+        const auto test = spanish[i];
+        const auto it = std::find_if(french, french + BIP39::NUM_BIP39_WORDS, [test] (const char* const word) {
+            return strcmp(test, word) == 0;
+        });
+        if (it != french + BIP39::NUM_BIP39_WORDS) {
+            ++intersection;
+        }
     }
-
-    BOOST_REQUIRE_EQUAL(intersection, 0u);
+    ASSERT_EQ(0u, intersection);
 }
 
 TEST(BIP39, dictionary__it_es__no_intersection)
 {
-    const auto& italian = language::it;
-    const auto& spanish = language::es;
-    size_t intersection = 0;
-    for (const auto es : spanish)
+    const auto italian = BIP39::get_string_table(BIP39::language::it);
+    const auto spanish = BIP39::get_string_table(BIP39::language::es);
+    auto intersection = 0u;
+    for (auto i = 0ul; i < BIP39::NUM_BIP39_WORDS; ++i)
     {
-        std::string test(es);
-        const auto it = std::find(italian.begin(), italian.end(), test);
-        if (it != std::end(italian))
-            intersection++;
+        const auto test = spanish[i];
+        const auto it = std::find_if(italian, italian + BIP39::NUM_BIP39_WORDS, [test] (const char* const word) {
+            return strcmp(test, word) == 0;
+        });
+        if (it != italian + BIP39::NUM_BIP39_WORDS) {
+            ++intersection;
+        }
     }
-
-    BOOST_REQUIRE_EQUAL(intersection, 0u);
+    ASSERT_EQ(0u, intersection);
 }
 
 TEST(BIP39, dictionary__fr_it__no_intersection)
 {
-    const auto& french = language::fr;
-    const auto& italian = language::it;
-    size_t intersection = 0;
-    for (const auto it : italian)
+    const auto french = BIP39::get_string_table(BIP39::language::fr);
+    const auto italian = BIP39::get_string_table(BIP39::language::it);
+    auto intersection = 0u;
+    for (auto i = 0ul; i < BIP39::NUM_BIP39_WORDS; ++i)
     {
-        std::string test(it);
-        const auto iter = std::find(french.begin(), french.end(), test);
-        if (iter != std::end(french))
-            intersection++;
+        const auto test = italian[i];
+        const auto it = std::find_if(french, french + BIP39::NUM_BIP39_WORDS, [test] (const char* const word) {
+            return strcmp(test, word) == 0;
+        });
+        if (it != french + BIP39::NUM_BIP39_WORDS) {
+            ++intersection;
+        }
     }
-
-    BOOST_REQUIRE_EQUAL(intersection, 0u);
+    ASSERT_EQ(0u, intersection);
 }
 
 TEST(BIP39, dictionary__zh_Hans_Hant__intersection)
 {
-    const auto& simplified = language::zh_Hans;
-    const auto& traditional = language::zh_Hant;
-    size_t intersection = 0;
-    for (const auto hant : traditional)
+    const auto simplified = BIP39::get_string_table(BIP39::language::zh_Hans);
+    const auto traditional = BIP39::get_string_table(BIP39::language::zh_Hant);
+    auto intersection = 0u;
+    for (auto i = 0ul; i < BIP39::NUM_BIP39_WORDS; ++i)
     {
-        std::string test(hant);
-        const auto it = std::find(simplified.begin(), simplified.end(), test);
-        if (it != std::end(simplified))
-            intersection++;
+        const auto test = traditional[i];
+        const auto it = std::find_if(simplified, simplified + BIP39::NUM_BIP39_WORDS, [test] (const char* const word) {
+            return strcmp(test, word) == 0;
+        });
+        if (it != simplified + BIP39::NUM_BIP39_WORDS) {
+            ++intersection;
+        }
     }
-
-    BOOST_REQUIRE_EQUAL(intersection, 1275u);
+    ASSERT_EQ(1275u, intersection);
 }
-#endif
