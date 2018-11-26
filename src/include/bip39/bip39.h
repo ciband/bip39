@@ -9,7 +9,7 @@
 
 namespace BIP39 {
 
-const uint8_t MAX_BIP39_WORD_LENGTH = 8 + 1;
+const size_t MAX_BIP39_WORD_OCTETS = (8 * 4) + 1; //8 characters per word * 4 potential octets per character in UTF-8 + 1 nul terminiator
 const size_t NUM_BIP39_WORDS = 2048;
 const size_t BYTE_BITS = 8;
 const size_t ENTROPY_BIT_DIVISOR = 32;
@@ -37,7 +37,14 @@ const std::map<entropy_bits_t, size_t> CHECKSUM_BITS = {
 };
 
 enum class language : uint8_t {
-	en
+	en,
+    es,
+    ja,
+    it,
+    fr,
+    ko,
+    zh_Hans,
+    zh_Hant
 };
 
 word_list generate_mnemonic(entropy_bits_t entropy = entropy_bits_t::_128, language lang = language::en);

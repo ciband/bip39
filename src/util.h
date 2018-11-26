@@ -6,10 +6,6 @@
 #include <cstdint>
 #include <string>
 
-#define STRING_VAR_DECL(s) const char s##_str[] PROGMEM = #s;
-
-#define STRING_VAR(s) s##_str
-
 #if (defined ARDUINO || defined ESP8266 || defined ESP32)
 
 #define BIP39_PLATFORM_IOT
@@ -36,14 +32,12 @@
 
 #endif
 
-#endif
-
 namespace BIP39 {
 
 word_list split(const std::string& s, char delimiter);
 
 template <typename InputIt>
-std::string join(InputIt begin, InputIt end, const std::string& separator) {
+inline std::string join(InputIt begin, InputIt end, const std::string& separator) {
     std::string s;
 
     for (auto it = begin; it != end; ++it) {
@@ -57,3 +51,5 @@ std::string join(InputIt begin, InputIt end, const std::string& separator) {
 }
 
 }
+
+#endif
