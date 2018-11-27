@@ -1,5 +1,12 @@
 #include "bip39/bip39.h"
-#include "en.h"
+#include "dictionary/english.h"
+#include "dictionary/spanish.h"
+#include "dictionary/japanese.h"
+#include "dictionary/italian.h"
+#include "dictionary/french.h"
+#include "dictionary/korean.h"
+#include "dictionary/chinese_simplified.h"
+#include "dictionary/chinese_traditional.h"
 
 #include "picosha2.h"
 
@@ -15,17 +22,24 @@ namespace BIP39 {
 using random_bytes_engine = std::independent_bits_engine<
     std::default_random_engine, 16, uint16_t>;
 
-namespace {
-
 const char* const * get_string_table(language lang) {
 	switch (lang) {
-	case language::en: return en_table;
+	case language::en: return english_table;
+    case language::es: return spanish_table;
+    case language::ja: return japanese_table;
+    case language::it: return italian_table;
+    case language::fr: return french_table;
+    case language::ko: return korean_table;
+    case language::zh_Hans: return chinese_simplified_table;
+    case language::zh_Hant: return chinese_traditional_table;
 
 	default:
 		assert("error unsupported language");
 		return nullptr;
 	};
 }
+
+namespace {
 
 uint8_t bip39_shift(size_t bit)
 {
@@ -34,7 +48,7 @@ uint8_t bip39_shift(size_t bit)
 
 int get_word_index(const char* const * const lexicon, const std::string& word) {
     for (auto i = 0u; i < NUM_BIP39_WORDS; ++i) {
-        char w[MAX_BIP39_WORD_LENGTH] = {};
+        char w[MAX_BIP39_WORD_OCTETS] = {};
         strcpy_P(w, (char*)pgm_read_ptr_far(&(lexicon[i])));
         if (strcmp(w, word.c_str()) == 0) {
             return i;
@@ -86,7 +100,7 @@ word_list create_mnemonic(std::vector<uint8_t>& entropy, language lang /* = lang
         }
 
         assert(position < DICTIONARY_SIZE);
-        char word[MAX_BIP39_WORD_LENGTH] = {};
+        char word[MAX_BIP39_WORD_OCTETS] = {};
         strcpy_P(word, (char*)pgm_read_ptr_far(&(lexicon[position])));
         words.add(word);
     }

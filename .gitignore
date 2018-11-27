@@ -371,3 +371,12 @@ ASALocalRun/
 /examples/bip39_example.sln
 /examples/ALL_BUILD.vcxproj.filters
 /examples/ALL_BUILD.vcxproj
+/make_dictionary/INSTALL.vcxproj.filters
+/make_dictionary/INSTALL.vcxproj
+/make_dictionary/cmake_install.cmake
+/make_dictionary/CMakeFiles
+/make_dictionary/bip39_make_dictionary.vcxproj.filters
+/make_dictionary/bip39_make_dictionary.vcxproj
+/make_dictionary/bip39_make_dictionary.sln
+/make_dictionary/ALL_BUILD.vcxproj.filters
+/make_dictionary/ALL_BUILD.vcxproj

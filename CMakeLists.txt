@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
 
@@ -24,4 +24,5 @@ execute_process(
 add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(examples)
+add_subdirectory(make_dictionary)
 
