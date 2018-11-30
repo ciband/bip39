@@ -18,8 +18,8 @@
     "frameworks": "arduino",
     "platforms": [
         "native",
-        "Espressif 32",
-        "Espressif 8266"
+        "espressif32",
+        "espressif8266"
     ],
     "export": {
         "include": [
