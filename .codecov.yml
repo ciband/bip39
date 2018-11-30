@@ -1,0 +1,4 @@
+ignore:
+  - "test"
+  - "examples"
+  - "make_dictionary"
