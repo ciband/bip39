@@ -14,7 +14,7 @@
     "dependencies": {
 
     },
-    "version": "1.0.0",
+    "version": "1.0.1",
     "frameworks": "arduino",
     "platforms": [
         "native",
@@ -28,7 +28,8 @@
     },
     "build": {
         "flags": [
-            "-I src/include"
+            "-I src/include",
+            "-I src/lib/PicoSHA2"
         ]
     }
 }
