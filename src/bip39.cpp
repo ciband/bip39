@@ -149,8 +149,7 @@ bool valid_mnemonic(const word_list& words, language lang /* = language::en */) 
     for (const auto& word : words)
     {
         const auto position = get_word_index(lexicon, word);
-        if (position == -1)
-            return false;
+        if (position == -1) { return false; }
 
         for (size_t loop = 0; loop < BITS_PER_WORD; loop++, bit++)
         {
