@@ -46,7 +46,7 @@ word_list split(const std::string& s, char delimiter)
     word_list tokens;
     std::string token;
     std::istringstream tokenStream(s);
-    while (std::getline(tokenStream, token, delimiter))
+    while (std::getline(tokenStream, token, delimiter) != nullptr)
     {
         tokens.add(token);
     }
