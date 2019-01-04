@@ -130,7 +130,7 @@ std::vector<uint8_t> decode_mnemonic(const word_list& mnemonic, const std::strin
     return std::vector<uint8_t>();
 }
 
-bool valid_mnemonic(const word_list& words, language lang /* = language::en */) {
+bool valid_mnemonic(const word_list& mnemonic, language lang /* = language::en */) {
     const auto word_count = words.size();
     if ((word_count % MNEMONIC_WORD_MULTIPLE) != 0) {
         return false;
