@@ -96,7 +96,9 @@ word_list create_mnemonic(std::vector<uint8_t>& entropy, language lang /* = lang
             const auto byte = bit / BYTE_BITS;
 
             if ((entropy[byte] & bip39_shift(bit)) > 0)
+            {
                 position++;
+            }
         }
 
         assert(position < DICTIONARY_SIZE);
