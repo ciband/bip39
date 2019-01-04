@@ -27,7 +27,7 @@
 #define PROGMEM
 #define PGM_P const char*
 
-#define pgm_read_ptr_far(p) (*p)
+#define pgm_read_ptr_far(p) (*(p))
 #define strcpy_P strcpy
 
 #endif
