@@ -7,7 +7,7 @@ if [[ -n $(grep "error: " output.txt) ]]; then
     echo "You must pass the clang tidy checks before submitting a pull request"
     echo ""
     grep --color -E '^|warning: |error: ' output.txt
-    exit -1;
+    #exit -1;
 else
     # still output the file to show warnings
     echo ""
