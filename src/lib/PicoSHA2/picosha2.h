@@ -286,7 +286,7 @@ inline std::string get_hash_hex_string(const hash256_one_by_one& hasher) {
 
 namespace impl {
 template <typename RaIter, typename OutIter>
-void hash256_impl(RaIter first, RaIter last, OutIter first2, OutIter last2, int,
+void hash256_impl(RaIter first, RaIter last, OutIter first2, OutIter last2, int /*unused*/,
                   std::random_access_iterator_tag) {
     hash256_one_by_one hasher;
     // hasher.init();
@@ -297,7 +297,7 @@ void hash256_impl(RaIter first, RaIter last, OutIter first2, OutIter last2, int,
 
 template <typename InputIter, typename OutIter>
 void hash256_impl(InputIter first, InputIter last, OutIter first2,
-                  OutIter last2, int buffer_size, std::input_iterator_tag) {
+                  OutIter last2, int buffer_size, std::input_iterator_tag /*unused*/) {
     std::vector<byte_t> buffer(buffer_size);
     hash256_one_by_one hasher;
     // hasher.init();
