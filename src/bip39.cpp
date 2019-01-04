@@ -131,7 +131,7 @@ std::vector<uint8_t> decode_mnemonic(const word_list& mnemonic, const std::strin
 }
 
 bool valid_mnemonic(const word_list& mnemonic, language lang /* = language::en */) {
-    const auto word_count = words.size();
+    const auto word_count = mnemonic.size();
     if ((word_count % MNEMONIC_WORD_MULTIPLE) != 0) {
         return false;
     }
@@ -146,7 +146,7 @@ bool valid_mnemonic(const word_list& mnemonic, language lang /* = language::en *
     std::vector<uint8_t> data((total_bits + BYTE_BITS - 1) / BYTE_BITS, 0);
     const auto lexicon = get_string_table(lang);
 
-    for (const auto& word : words)
+    for (const auto& word : mnemonic)
     {
         const auto position = get_word_index(lexicon, word);
         if (position == -1) { return false; }
@@ -162,8 +162,8 @@ bool valid_mnemonic(const word_list& mnemonic, language lang /* = language::en *
     }
 
     data.resize(entropy_bits / BYTE_BITS);
-    const auto mnemonic = create_mnemonic(data, lang);
-    return std::equal(mnemonic.begin(), mnemonic.end(), words.begin());
+    const auto new_mnemonic = create_mnemonic(data, lang);
+    return std::equal(new_mnemonic.begin(), new_mnemonic.end(), mnemonic.begin());
 }
 
 }
