@@ -110,12 +110,12 @@ word_list create_mnemonic(std::vector<uint8_t>& entropy, language lang /* = lang
 }
 
 word_list generate_mnemonic(entropy_bits_t entropy /* = entropy_bits::_128 */, language lang /* = language::en */) {
-    const size_t entropy_bits = static_cast<entropy_bits_int_type>(entropy);
+    const auto entropy_bits = static_cast<entropy_bits_int_type>(entropy);
     assert(entropy_bits % (MNEMONIC_SEED_MULTIPLE * BYTE_BITS) == 0);
 
-    const size_t check_bits = (entropy_bits / ENTROPY_BIT_DIVISOR);
-    const size_t total_bits = (entropy_bits + check_bits);
-    const size_t word_count = (total_bits / BITS_PER_WORD);
+    const auto check_bits = (entropy_bits / ENTROPY_BIT_DIVISOR);
+    const auto total_bits = (entropy_bits + check_bits);
+    const auto word_count = (total_bits / BITS_PER_WORD);
 
     assert((total_bits % BITS_PER_WORD) == 0);
     assert((word_count % MNEMONIC_WORD_MULTIPLE) == 0);
