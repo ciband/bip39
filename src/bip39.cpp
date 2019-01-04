@@ -153,7 +153,7 @@ bool valid_mnemonic(const word_list& words, language lang /* = language::en */) 
 
         for (size_t loop = 0; loop < BITS_PER_WORD; loop++, bit++)
         {
-            if (position & (1 << (BITS_PER_WORD - loop - 1)))
+            if ((position & (1 << (BITS_PER_WORD - loop - 1))) != 0)
             {
                 const auto byte = bit / BYTE_BITS;
                 data[byte] |= bip39_shift(bit);
