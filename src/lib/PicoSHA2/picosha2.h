@@ -235,11 +235,11 @@ class hash256_one_by_one {
     void add_to_data_length(word_t n) {
         word_t carry = 0;
         data_length_digits_[0] += n;
-        for (std::size_t i = 0; i < 4; ++i) {
-            data_length_digits_[i] += carry;
-            if (data_length_digits_[i] >= 65536u) {
-                carry = data_length_digits_[i] >> 16;
-                data_length_digits_[i] &= 65535u;
+        for (auto& digit : data_length_digits_) {
+            digit += carry;
+            if (digit >= 65536u) {
+                carry = digit >> 16;
+                digit &= 65535u;
             } else {
                 break;
             }
@@ -252,11 +252,11 @@ class hash256_one_by_one {
 
         // convert byte length to bit length (multiply 8 or shift 3 times left)
         word_t carry = 0;
-        for (std::size_t i = 0; i < 4; ++i) {
-            word_t before_val = data_bit_length_digits[i];
-            data_bit_length_digits[i] <<= 3;
-            data_bit_length_digits[i] |= carry;
-            data_bit_length_digits[i] &= 65535u;
+        for (auto& digit : data_bit_length_digits) {
+            word_t before_val = digit;
+            digit <<= 3;
+            digit |= carry;
+            digit &= 65535u;
             carry = (before_val >> (16 - 3)) & 65535u;
         }
 
