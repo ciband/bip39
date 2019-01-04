@@ -8,10 +8,10 @@ namespace BIP39 {
 
 class word_list {
 public:
-    typedef std::vector<std::string> data_type;
-    typedef typename data_type::const_iterator const_iterator;
-    typedef typename data_type::iterator iterator;
-    typedef typename data_type::size_type size_type;
+    using data_type = std::vector<std::string>;
+    using const_iterator = typename data_type::const_iterator;
+    using iterator = typename data_type::iterator;
+    using size_type = typename data_type::size_type;
 
 private:
     data_type _words;
