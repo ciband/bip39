@@ -66,6 +66,23 @@ matrix:
         - MATRIX_EVAL=""
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
+        
+    #
+    # Clang Tidy
+    #
+    - os: linux
+      env:
+        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+        - INSTALL_SCRIPT=""
+        - BUILD_SCRIPT="./.travis/script_clang_tidy.sh"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - clang-5.0
+            - clang-tidy-5.0        
  
 before_install:
     - eval "${MATRIX_EVAL}"
