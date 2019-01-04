@@ -26,7 +26,7 @@ enum class entropy_bits_t : size_t {
     _256 = 256
 };
 
-typedef std::underlying_type<entropy_bits_t>::type entropy_bits_int_type;
+using entropy_bits_int_type = std::underlying_type<entropy_bits_t>::type;
 
 const std::map<entropy_bits_t, size_t> CHECKSUM_BITS = {
     { entropy_bits_t::_128, 4 },
