@@ -29,7 +29,7 @@ inline std::string BytesToHex(const T itbegin, const T itend, bool fSpaces = fal
     rv.reserve((itend - itbegin) * 3);
     for (T it = itbegin; it < itend; ++it)
     {
-        unsigned char val = (unsigned char)(*it);
+        const auto val = (unsigned char)(*it);
         if (fSpaces && it != itbegin)
             rv.push_back(' ');
         rv.push_back(hexmap[val >> 4]);
@@ -37,7 +37,7 @@ inline std::string BytesToHex(const T itbegin, const T itend, bool fSpaces = fal
     }
 
     return rv;
-};
+}
 
 /**/
 
@@ -45,7 +45,7 @@ template<typename T>
 inline std::string BytesToHex(const T& vch, bool fSpaces = false)
 {
     return BytesToHex(vch.begin(), vch.end(), fSpaces);
-};
+}
 
 /********/
 
