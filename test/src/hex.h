@@ -84,7 +84,7 @@ inline std::vector<unsigned char> HexToBytes(const char* psz)
     std::vector<unsigned char> vch;
     while (true)
     {
-        while (isspace(*psz)) {
+        while (isspace(*psz) != 0) {
             psz++;
         }
         signed char c = HexDigit(*psz++);
