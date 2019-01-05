@@ -42,7 +42,7 @@ if(ENABLE_CLANG_TIDY)
 
     list(APPEND RUN_CLANG_TIDY_BIN_ARGS
         -clang-tidy-binary ${CLANG_TIDY_BIN}
-        -header-filter=.*
+        -header-filter=./src/lib.*,./src/test/lib
         -checks=clan*,cert*,misc*,perf*,cppc*,read*,mode*,-cert-err58-cpp,-misc-noexcept-move-constructor,-cppcoreguidelines-*
     )
 
