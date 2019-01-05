@@ -19,9 +19,15 @@ private:
 public:
     word_list() = default;
 
+#ifdef __cpp_rvalue_references
     void add(std::string word) {
         _words.emplace_back(std::move(word));
     }
+#else
+    void add(const std::string& word) {
+        _words.push_back(word);
+    }
+#endif
 
     std::string to_string() const {
         std::string s;
