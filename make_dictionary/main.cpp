@@ -6,7 +6,7 @@
 #include <map>
 #include <array>
 
-#include <filesystem>
+#include <filesystem> // NOLINT
 namespace fs = std::filesystem;
 
 int main(int argc, char* argv[]) {
