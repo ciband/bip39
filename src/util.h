@@ -28,7 +28,7 @@
 #define PGM_P const char*
 
 #define pgm_read_ptr_far(p) (*(p))
-#define strcpy_P strcpy
+#define strcpy_P strcpy // NOLINT
 
 #endif
 

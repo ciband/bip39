@@ -49,7 +49,7 @@ uint8_t bip39_shift(size_t bit)
 int get_word_index(const char* const * const lexicon, const std::string& word) {
     for (auto i = 0u; i < NUM_BIP39_WORDS; ++i) {
         char w[MAX_BIP39_WORD_OCTETS] = {};
-        strcpy_P(w, (char*)pgm_read_ptr_far(&(lexicon[i])));
+        strcpy_P(w, (char*)pgm_read_ptr_far(&(lexicon[i]))); // NOLINT
         if (strcmp(w, word.c_str()) == 0) {
             return i;
         }
@@ -103,7 +103,7 @@ word_list create_mnemonic(std::vector<uint8_t>& entropy, language lang /* = lang
 
         assert(position < DICTIONARY_SIZE);
         char word[MAX_BIP39_WORD_OCTETS] = {};
-        strcpy_P(word, (char*)pgm_read_ptr_far(&(lexicon[position])));
+        strcpy_P(word, (char*)pgm_read_ptr_far(&(lexicon[position]))); // NOLINT
         words.add(word);
     }
     return words;
