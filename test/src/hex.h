@@ -30,8 +30,9 @@ inline std::string BytesToHex(const T itbegin, const T itend, bool fSpaces = fal
     for (T it = itbegin; it < itend; ++it)
     {
         const auto val = (unsigned char)(*it);
-        if (fSpaces && it != itbegin)
+        if (fSpaces && it != itbegin) {
             rv.push_back(' ');
+        }
         rv.push_back(hexmap[val >> 4]);
         rv.push_back(hexmap[val & 15]);
     }
@@ -83,20 +84,19 @@ inline std::vector<unsigned char> HexToBytes(const char* psz)
     std::vector<unsigned char> vch;
     while (true)
     {
-        while (isspace(*psz))
+        while (isspace(*psz)) {
             psz++;
+        }
         signed char c = HexDigit(*psz++);
-        if (c == (signed char)-1)
-            break;
+        if (c == (signed char)-1) { break; }
         unsigned char n = (c << 4);
         c = HexDigit(*psz++);
-        if (c == (signed char)-1)
-            break;
+        if (c == (signed char)-1) { break; }
         n |= c;
         vch.push_back(n);
     }
     return vch;
-};
+}
 
 /**/
 }
