@@ -8,7 +8,7 @@
 #include <cstring>
 #include <set>
 
-TEST(bip39, generate_mnemonic) {
+TEST(bip39, generate_mnemonic) { // NOLINT
 	auto passphrase = BIP39::generate_mnemonic(BIP39::entropy_bits_t::_256, BIP39::language::en);
 	std::set<std::string> words;
 	char s[256] = {};
@@ -34,7 +34,7 @@ TEST(bip39, generate_mnemonic) {
 }
 
 #if 0
-TEST(bip39, decode_mnemonic__no_passphrase) {
+TEST(bip39, decode_mnemonic__no_passphrase) { // NOLINT
     for (const auto& vector : mnemonic_no_passphrase) {
         const auto words = BIP39::split(vector.mnemonic, ',');
         ASSERT_TRUE(BIP39::valid_mnemonic(words, vector.language));
@@ -43,8 +43,7 @@ TEST(bip39, decode_mnemonic__no_passphrase) {
     }
 }
 
-TEST(bip39, decode_mnemonic__trezor)
-{
+TEST(bip39, decode_mnemonic__trezor) { // NOLINT
     for (const auto& vector : mnemonic_trezor_vectors)
     {
         const auto words = BIP39::split(vector.mnemonic, ',');
@@ -54,8 +53,7 @@ TEST(bip39, decode_mnemonic__trezor)
     }
 }
 
-TEST(bip39, decode_mnemonic__bx)
-{
+TEST(bip39, decode_mnemonic__bx) { // NOLINT
     for (const auto& vector : mnemonic_bx_to_seed_vectors)
     {
         const auto words = BIP39::split(vector.mnemonic, ',');
@@ -67,7 +65,7 @@ TEST(bip39, decode_mnemonic__bx)
 
 #endif
 
-TEST(bip39, validate_mnemonic__invalid) {
+TEST(bip39, validate_mnemonic__invalid) { // NOLINT
     for (const auto& mnemonic: invalid_mnemonic_tests)
     {
         const auto words = BIP39::split(mnemonic, ',');
@@ -75,8 +73,7 @@ TEST(bip39, validate_mnemonic__invalid) {
     }
 }
 
-TEST(bip39, create_mnemonic__trezor)
-{
+TEST(bip39, create_mnemonic__trezor) { // NOLINT
     for (const mnemonic_result& vector : mnemonic_trezor_vectors)
     {
         std::vector<uint8_t> entropy = BIP39::HexToBytes(vector.entropy.c_str());
@@ -87,7 +84,7 @@ TEST(bip39, create_mnemonic__trezor)
     }
 }
 
-TEST(bip39, create_mnemonic__bx) {
+TEST(bip39, create_mnemonic__bx) { // NOLINT
     for (const auto& vector : mnemonic_bx_new_vectors)
     {
         std::vector<uint8_t> entropy = BIP39::HexToBytes(vector.entropy.c_str());
@@ -98,22 +95,21 @@ TEST(bip39, create_mnemonic__bx) {
     }
 }
 
-TEST(bip39, create_mnemonic__tiny) {
+TEST(bip39, create_mnemonic__tiny) { // NOLINT
     std::vector<uint8_t> entropy(4, 0xa9);
     const auto mnemonic = BIP39::create_mnemonic(entropy);
     ASSERT_EQ(3u, mnemonic.size());
     ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
 }
 
-TEST(bip39, create_mnemonic__giant) {
+TEST(bip39, create_mnemonic__giant) { // NOLINT
     std::vector<uint8_t> entropy(1024, 0xa9);
     const auto mnemonic = BIP39::create_mnemonic(entropy);
     ASSERT_EQ(768u, mnemonic.size());
     ASSERT_TRUE(BIP39::valid_mnemonic(mnemonic));
 }
 
-TEST(BIP39, dictionary__en_es__no_intersection)
-{
+TEST(BIP39, dictionary__en_es__no_intersection) { // NOLINT
     const auto english = BIP39::get_string_table(BIP39::language::en);
     const auto spanish = BIP39::get_string_table(BIP39::language::es);
     auto intersection = 0u;
@@ -130,8 +126,7 @@ TEST(BIP39, dictionary__en_es__no_intersection)
     ASSERT_EQ(0u, intersection);
 }
 
-TEST(BIP39, dictionary__en_it__no_intersection)
-{
+TEST(BIP39, dictionary__en_it__no_intersection) { // NOLINT
     const auto english = BIP39::get_string_table(BIP39::language::en);
     const auto italian = BIP39::get_string_table(BIP39::language::it);
     auto intersection = 0u;
@@ -148,8 +143,7 @@ TEST(BIP39, dictionary__en_it__no_intersection)
     ASSERT_EQ(0u, intersection);
 }
 
-TEST(BIP39, dictionary__fr_es__no_intersection)
-{
+TEST(BIP39, dictionary__fr_es__no_intersection) { // NOLINT
     const auto french = BIP39::get_string_table(BIP39::language::fr);
     const auto spanish = BIP39::get_string_table(BIP39::language::es);
     auto intersection = 0u;
@@ -166,8 +160,7 @@ TEST(BIP39, dictionary__fr_es__no_intersection)
     ASSERT_EQ(0u, intersection);
 }
 
-TEST(BIP39, dictionary__it_es__no_intersection)
-{
+TEST(BIP39, dictionary__it_es__no_intersection) { // NOLINT
     const auto italian = BIP39::get_string_table(BIP39::language::it);
     const auto spanish = BIP39::get_string_table(BIP39::language::es);
     auto intersection = 0u;
@@ -184,8 +177,7 @@ TEST(BIP39, dictionary__it_es__no_intersection)
     ASSERT_EQ(0u, intersection);
 }
 
-TEST(BIP39, dictionary__fr_it__no_intersection)
-{
+TEST(BIP39, dictionary__fr_it__no_intersection) { // NOLINT
     const auto french = BIP39::get_string_table(BIP39::language::fr);
     const auto italian = BIP39::get_string_table(BIP39::language::it);
     auto intersection = 0u;
@@ -202,8 +194,7 @@ TEST(BIP39, dictionary__fr_it__no_intersection)
     ASSERT_EQ(0u, intersection);
 }
 
-TEST(BIP39, dictionary__zh_Hans_Hant__intersection)
-{
+TEST(BIP39, dictionary__zh_Hans_Hant__intersection) { // NOLINT
     const auto simplified = BIP39::get_string_table(BIP39::language::zh_Hans);
     const auto traditional = BIP39::get_string_table(BIP39::language::zh_Hant);
     auto intersection = 0u;

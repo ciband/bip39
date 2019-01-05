@@ -49,7 +49,7 @@ uint8_t bip39_shift(size_t bit)
 int get_word_index(const char* const * const lexicon, const std::string& word) {
     for (auto i = 0u; i < NUM_BIP39_WORDS; ++i) {
         char w[MAX_BIP39_WORD_OCTETS] = {};
-        strcpy_P(w, (char*)pgm_read_ptr_far(&(lexicon[i])));
+        strcpy_P(w, (char*)pgm_read_ptr_far(&(lexicon[i]))); // NOLINT
         if (strcmp(w, word.c_str()) == 0) {
             return i;
         }
@@ -96,24 +96,26 @@ word_list create_mnemonic(std::vector<uint8_t>& entropy, language lang /* = lang
             const auto byte = bit / BYTE_BITS;
 
             if ((entropy[byte] & bip39_shift(bit)) > 0)
+            {
                 position++;
+            }
         }
 
         assert(position < DICTIONARY_SIZE);
         char word[MAX_BIP39_WORD_OCTETS] = {};
-        strcpy_P(word, (char*)pgm_read_ptr_far(&(lexicon[position])));
+        strcpy_P(word, (char*)pgm_read_ptr_far(&(lexicon[position]))); // NOLINT
         words.add(word);
     }
     return words;
 }
 
 word_list generate_mnemonic(entropy_bits_t entropy /* = entropy_bits::_128 */, language lang /* = language::en */) {
-    const size_t entropy_bits = static_cast<entropy_bits_int_type>(entropy);
+    const auto entropy_bits = static_cast<entropy_bits_int_type>(entropy);
     assert(entropy_bits % (MNEMONIC_SEED_MULTIPLE * BYTE_BITS) == 0);
 
-    const size_t check_bits = (entropy_bits / ENTROPY_BIT_DIVISOR);
-    const size_t total_bits = (entropy_bits + check_bits);
-    const size_t word_count = (total_bits / BITS_PER_WORD);
+    const auto check_bits = (entropy_bits / ENTROPY_BIT_DIVISOR);
+    const auto total_bits = (entropy_bits + check_bits);
+    const auto word_count = (total_bits / BITS_PER_WORD);
 
     assert((total_bits % BITS_PER_WORD) == 0);
     assert((word_count % MNEMONIC_WORD_MULTIPLE) == 0);
@@ -128,8 +130,8 @@ std::vector<uint8_t> decode_mnemonic(const word_list& mnemonic, const std::strin
     return std::vector<uint8_t>();
 }
 
-bool valid_mnemonic(const word_list& words, language lang /* = language::en */) {
-    const auto word_count = words.size();
+bool valid_mnemonic(const word_list& mnemonic, language lang /* = language::en */) {
+    const auto word_count = mnemonic.size();
     if ((word_count % MNEMONIC_WORD_MULTIPLE) != 0) {
         return false;
     }
@@ -144,15 +146,14 @@ bool valid_mnemonic(const word_list& words, language lang /* = language::en */) 
     std::vector<uint8_t> data((total_bits + BYTE_BITS - 1) / BYTE_BITS, 0);
     const auto lexicon = get_string_table(lang);
 
-    for (const auto& word : words)
+    for (const auto& word : mnemonic)
     {
         const auto position = get_word_index(lexicon, word);
-        if (position == -1)
-            return false;
+        if (position == -1) { return false; }
 
         for (size_t loop = 0; loop < BITS_PER_WORD; loop++, bit++)
         {
-            if (position & (1 << (BITS_PER_WORD - loop - 1)))
+            if ((position & (1 << (BITS_PER_WORD - loop - 1))) != 0)
             {
                 const auto byte = bit / BYTE_BITS;
                 data[byte] |= bip39_shift(bit);
@@ -161,8 +162,8 @@ bool valid_mnemonic(const word_list& words, language lang /* = language::en */) 
     }
 
     data.resize(entropy_bits / BYTE_BITS);
-    const auto mnemonic = create_mnemonic(data, lang);
-    return std::equal(mnemonic.begin(), mnemonic.end(), words.begin());
+    const auto new_mnemonic = create_mnemonic(data, lang);
+    return std::equal(new_mnemonic.begin(), new_mnemonic.end(), mnemonic.begin());
 }
 
 }

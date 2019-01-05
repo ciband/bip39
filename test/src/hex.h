@@ -29,15 +29,16 @@ inline std::string BytesToHex(const T itbegin, const T itend, bool fSpaces = fal
     rv.reserve((itend - itbegin) * 3);
     for (T it = itbegin; it < itend; ++it)
     {
-        unsigned char val = (unsigned char)(*it);
-        if (fSpaces && it != itbegin)
+        const auto val = (unsigned char)(*it);
+        if (fSpaces && it != itbegin) {
             rv.push_back(' ');
+        }
         rv.push_back(hexmap[val >> 4]);
         rv.push_back(hexmap[val & 15]);
     }
 
     return rv;
-};
+}
 
 /**/
 
@@ -45,7 +46,7 @@ template<typename T>
 inline std::string BytesToHex(const T& vch, bool fSpaces = false)
 {
     return BytesToHex(vch.begin(), vch.end(), fSpaces);
-};
+}
 
 /********/
 
@@ -83,20 +84,19 @@ inline std::vector<unsigned char> HexToBytes(const char* psz)
     std::vector<unsigned char> vch;
     while (true)
     {
-        while (isspace(*psz))
+        while (isspace(*psz) != 0) {
             psz++;
+        }
         signed char c = HexDigit(*psz++);
-        if (c == (signed char)-1)
-            break;
+        if (c == (signed char)-1) { break; }
         unsigned char n = (c << 4);
         c = HexDigit(*psz++);
-        if (c == (signed char)-1)
-            break;
+        if (c == (signed char)-1) { break; }
         n |= c;
         vch.push_back(n);
     }
     return vch;
-};
+}
 
 /**/
 }

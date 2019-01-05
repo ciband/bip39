@@ -2,12 +2,12 @@
 
 #include "bip39/word_list.h"
 
-TEST(word_list, default_construct) {
+TEST(word_list, default_construct) { // NOLINT
     BIP39::word_list list;
     ASSERT_STREQ("", list.to_string().c_str());
 }
 
-TEST(word_list, add_word) {
+TEST(word_list, add_word) { // NOLINT
     BIP39::word_list list;
     list.add("test");
 
