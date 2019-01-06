@@ -35,12 +35,12 @@ matrix:
       addons:
         apt:
           sources:
-            - llvm-toolchain-trusty-5.0
+            - llvm-toolchain-trusty-7
           packages:
-            - clang-5.0
+            - clang-7
             - lcov
       env:
-        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+        - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
@@ -72,17 +72,17 @@ matrix:
     #
     - os: linux
       env:
-        - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
+        - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_clang_tidy.sh"
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
+            - llvm-toolchain-trusty-7
           packages:
-            - clang-5.0
-            - clang-tidy-5.0        
+            - clang-7
+            - clang-tidy-7
  
 before_install:
     - eval "${MATRIX_EVAL}"
