@@ -11,7 +11,7 @@ TEST(bip39, generate_mnemonic) { // NOLINT
 	auto passphrase = BIP39::generate_mnemonic(BIP39::entropy_bits_t::_256, BIP39::language::en);
 	std::set<std::string> words;
     for (const auto& word : passphrase) {
-        ASSERT_TRUE(words.insert(word).second);
+        words.insert(word);
     }
 
 	ASSERT_EQ(24, words.size());
@@ -19,7 +19,7 @@ TEST(bip39, generate_mnemonic) { // NOLINT
 	passphrase = BIP39::generate_mnemonic(BIP39::entropy_bits_t::_128, BIP39::language::en);
 	words.clear();
     for (const auto& word : passphrase) {
-        ASSERT_TRUE(words.insert(word).second);
+        words.insert(word);
     }
 
 	ASSERT_EQ(12, words.size());
