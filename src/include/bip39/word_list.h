@@ -12,6 +12,8 @@ public:
     using const_iterator = typename data_type::const_iterator;
     using iterator = typename data_type::iterator;
     using size_type = typename data_type::size_type;
+    using reference = typename data_type::reference;
+    using const_reference = typename data_type::const_reference;
 
 private:
     data_type _words;
@@ -40,13 +42,16 @@ public:
         return s;
     }
 
-    size_type size() const { return _words.size(); }
-    const_iterator cbegin() const { return _words.cbegin(); }
-    const_iterator cend() const { return _words.cend(); }
-    const_iterator begin() const { return _words.begin(); }
-    const_iterator end() const { return _words.end(); }
-    iterator begin() { return _words.begin(); }
-    iterator end() { return _words.end(); }
+    size_type size() const noexcept { return _words.size(); }
+    const_iterator cbegin() const noexcept { return _words.cbegin(); }
+    const_iterator cend() const noexcept { return _words.cend(); }
+    const_iterator begin() const noexcept { return _words.begin(); }
+    const_iterator end() const noexcept { return _words.end(); }
+    iterator begin() noexcept { return _words.begin(); }
+    iterator end() noexcept { return _words.end(); }
+
+    reference operator[](size_t index) { return _words[index]; }
+    const_reference operator[](size_t index) const { return _words[index]; }
 };
 
 inline std::ostream& operator<<(std::ostream& os, const word_list& list) {

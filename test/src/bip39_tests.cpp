@@ -5,30 +5,22 @@
 #include "hex.h"
 
 #include <algorithm>
-#include <cstring>
 #include <set>
 
 TEST(bip39, generate_mnemonic) { // NOLINT
 	auto passphrase = BIP39::generate_mnemonic(BIP39::entropy_bits_t::_256, BIP39::language::en);
 	std::set<std::string> words;
-	char s[256] = {};
-	strncpy(s, passphrase.to_string().c_str(), sizeof(s));
-	auto pch = strtok(s, " ");
-	while (pch != nullptr) {
-		ASSERT_TRUE(words.insert(pch).second);
-		pch = strtok(nullptr, " ");
-	}
+    for (const auto& word : passphrase) {
+        ASSERT_TRUE(words.insert(word).second);
+    }
 
 	ASSERT_EQ(24, words.size());
 
 	passphrase = BIP39::generate_mnemonic(BIP39::entropy_bits_t::_128, BIP39::language::en);
 	words.clear();
-	strncpy(s, passphrase.to_string().c_str(), sizeof(s));
-	pch = strtok(s, " ");
-	while (pch != nullptr) {
-		ASSERT_TRUE(words.insert(pch).second);
-		pch = strtok(nullptr, " ");
-	}
+    for (const auto& word : passphrase) {
+        ASSERT_TRUE(words.insert(word).second);
+    }
 
 	ASSERT_EQ(12, words.size());
 }
