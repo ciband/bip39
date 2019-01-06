@@ -3,7 +3,7 @@ language: cpp
 matrix:
   include:
     - os: linux
-      dist: trusty
+      dist: xenial
       sudo: required
       group: deprecated-2017Q3
       
@@ -13,7 +13,7 @@ matrix:
         - BUILD_SCRIPT="./.travis/script_platform_io.sh"
   
     - os: linux
-      dist: trusty
+      dist: xenial
       sudo: required
       
       addons:
@@ -30,7 +30,7 @@ matrix:
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
     - os: linux
-      dist: trusty
+      dist: xenial
       sudo: required
       addons:
         apt:
@@ -73,6 +73,7 @@ matrix:
     # Clang Tidy
     #
     - os: linux
+      dist: xenial
       env:
         - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
         - INSTALL_SCRIPT=""
