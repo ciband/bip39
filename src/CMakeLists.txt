@@ -19,3 +19,7 @@ include_directories(${bip39_build_include_dirs})
 target_include_directories( ${PROJECT_NAME}
     PUBLIC ${bip39_build_include_dirs}
 )
+
+if (MSVC)
+	target_link_libraries(${PROJECT_NAME} PUBLIC Bcrypt)
+endif()
