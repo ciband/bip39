@@ -5,6 +5,7 @@
 #include <iostream>
 #include <map>
 #include <array>
+#include <cstring>
 
 #ifdef __cpp_lib_filesystem
 
