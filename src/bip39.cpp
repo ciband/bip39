@@ -22,7 +22,7 @@
 #include <bcrypt.h>
 #elif(defined __APPLE__)
 #else
-#include <sys/random.h>
+#include <linux/random.h>
 #endif
 
 namespace BIP39 {
