@@ -122,10 +122,11 @@ word_list generate_mnemonic(entropy_bits_t entropy /* = entropy_bits::_128 */, l
     const auto random_bytes_size = sizeof(decltype(engine()));
     for (auto i = 0u; i < data.size(); i += random_bytes_size) {
         const auto bytes = engine();
-        for (auto j = 0u; j < random_bytes_size; ++j) {
+        for (auto j = 0u; (j < random_bytes_size) && ((i + j) < data.size()); ++j) {
             data[i + j] = static_cast<uint8_t>(bytes >> j);
         }
     }
+    assert(data.size() == entropy_bits / BYTE_BITS);
     return create_mnemonic(data, lang);
 }
 
