@@ -77,8 +77,8 @@ void append_checksum_bits(std::vector<uint8_t>& entropyBuffer) {
     }
 }
 
-std::vector<uint8_t> get_random_bytes(size_t num_bytes) {
-    std::vector<uint8_t> bytes(num_bytes);
+void get_random_bytes(std::vector<uint8_t>& bytes) {
+    const auto num_bytes = bytes.size();
 #if (defined _WIN32 || defined __WIN64)
     auto ret = ::BCryptGenRandom(nullptr, &bytes[0], num_bytes, BCRYPT_USE_SYSTEM_PREFERRED_RNG);
     assert(BCRYPT_SUCCESS(ret));
@@ -87,7 +87,7 @@ std::vector<uint8_t> get_random_bytes(size_t num_bytes) {
 #else
     ssize_t bytes_generated = 0;
     for (;;) {
-        bytes_generated = getrandom(&bytes[bytes_generated], num_bytes - bytes_generated, GRND_RANDOM);
+        bytes_generated = getrandom(&bytes[bytes_generated], num_bytes - bytes_generated, /*GRND_RANDOM*/0x0002);
         if (bytes_generated == num_bytes) {
             break;
         }
@@ -97,8 +97,6 @@ std::vector<uint8_t> get_random_bytes(size_t num_bytes) {
         }
     }
 #endif
-
-    return bytes;
 }
 
 }
@@ -149,17 +147,9 @@ word_list generate_mnemonic(entropy_bits_t entropy /* = entropy_bits::_128 */, l
     assert((total_bits % BITS_PER_WORD) == 0);
     assert((word_count % MNEMONIC_WORD_MULTIPLE) == 0);
 
-    /*std::random_device engine;
     std::vector<uint8_t> data(entropy_bits / BYTE_BITS);
-    const auto random_bytes_size = sizeof(decltype(engine()));
-    for (auto i = 0u; i < data.size(); i += random_bytes_size) {
-        const auto bytes = engine();
-        for (auto j = 0u; (j < random_bytes_size) && ((i + j) < data.size()); ++j) {
-            data[i + j] = static_cast<uint8_t>(bytes >> j);
-        }
-    }
-    assert(data.size() == entropy_bits / BYTE_BITS);*/
-    return create_mnemonic(get_random_bytes(entropy_bits / BYTE_BITS), lang);
+    get_random_bytes(data);
+    return create_mnemonic(data, lang);
 }
 
 std::vector<uint8_t> decode_mnemonic(const word_list& mnemonic, const std::string& password /* = "" */) {
