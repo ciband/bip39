@@ -19,9 +19,6 @@
 
 namespace BIP39 {
 
-using random_bytes_engine = std::independent_bits_engine<
-    std::default_random_engine, 16, uint16_t>;
-
 const char* const * get_string_table(language lang) {
 	switch (lang) {
 	case language::en: return english_table;
@@ -120,9 +117,15 @@ word_list generate_mnemonic(entropy_bits_t entropy /* = entropy_bits::_128 */, l
     assert((total_bits % BITS_PER_WORD) == 0);
     assert((word_count % MNEMONIC_WORD_MULTIPLE) == 0);
 
-    random_bytes_engine rbe;
+    std::random_device engine;
     std::vector<uint8_t> data(entropy_bits / BYTE_BITS);
-    std::generate(begin(data), end(data), [&rbe]() { return static_cast<uint8_t>(std::ref(rbe)()); });
+    const auto random_bytes_size = sizeof(decltype(engine()));
+    for (auto i = 0u; i < data.size(); i += random_bytes_size) {
+        const auto bytes = engine();
+        for (auto j = 0u; j < random_bytes_size; ++j) {
+            data[i + j] = static_cast<uint8_t>(bytes >> j);
+        }
+    }
     return create_mnemonic(data, lang);
 }
 
