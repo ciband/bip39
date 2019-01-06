@@ -6,9 +6,17 @@
 #include <map>
 #include <array>
 
-// NOLINTNEXTLINE
+#ifdef __cpp_lib_filesystem
+
 #include <filesystem>
 namespace fs = std::filesystem;
+
+#else
+
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+
+#endif
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
