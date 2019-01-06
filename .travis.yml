@@ -84,6 +84,7 @@ matrix:
             - llvm-toolchain-trusty-7
           packages:
             - clang-7
+            - libstdc++-7-dev
             - clang-tidy-7
  
 before_install:
