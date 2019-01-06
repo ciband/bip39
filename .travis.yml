@@ -35,9 +35,11 @@ matrix:
       addons:
         apt:
           sources:
+            - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-7
           packages:
             - clang-7
+            - libstdc++-7-dev
             - lcov
       env:
         - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
