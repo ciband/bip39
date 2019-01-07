@@ -86,6 +86,24 @@ matrix:
             - clang-7
             - libstdc++-7-dev
             - clang-tidy-7
+            
+    #
+    # Clang Format
+    #
+    - os: linux
+      env:
+        - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
+        - INSTALL_SCRIPT=""
+        - BUILD_SCRIPT="./.travis/script_clang_format.sh"
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-7
+          packages:
+            - clang-7
+            - libstdc++-7-dev
+            - clang-format-7
  
 before_install:
     - eval "${MATRIX_EVAL}"
