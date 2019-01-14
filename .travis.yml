@@ -126,6 +126,7 @@ matrix:
  
 before_install:
     - eval "${MATRIX_EVAL}"
+    - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
     - chmod -R +x ./.travis/*.sh 
  
 install:
