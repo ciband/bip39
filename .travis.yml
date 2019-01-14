@@ -8,9 +8,30 @@ matrix:
       group: deprecated-2017Q3
       
       env:
-        - MATRIX_EVAL=""
+        - MATRIX_EVAL="Name=PlatformIO"
         - INSTALL_SCRIPT="./.travis/install_platform_io.sh"
         - BUILD_SCRIPT="./.travis/script_platform_io.sh"
+        
+    - os: linux
+      dist: trusty
+      sudo: required
+      group: deprecated-2017Q3
+      
+      cache:
+        directories:
+          - ~/arduino_ide
+          - ~/.arduino15/packages/
+      git:
+        depth: false
+        quiet: true
+      
+      env:
+        - MATRIX_EVAL="Name=ArduinoIDE"
+        - INSTALL_SCRIPT=""
+        - BUILD_SCRIPT="./.travis/script_arduino_ide.sh"
+        
+      before_install:
+        - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
   
     - os: linux
       dist: trusty
@@ -25,7 +46,7 @@ matrix:
             - lcov
             
       env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+        - MATRIX_EVAL="Name=GCC 7 && CC=gcc-7 && CXX=g++-7"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
@@ -42,7 +63,7 @@ matrix:
             - libstdc++-7-dev
             - lcov
       env:
-        - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
+        - MATRIX_EVAL="Name=Clang 7 && CC=clang-7 && CXX=clang++-7"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
@@ -55,6 +76,7 @@ matrix:
             - lcov
       env:
         - COMPILER=clang++
+        - MATRIX_EVAL="Name=MacOS Clang"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
@@ -65,7 +87,7 @@ matrix:
           packages:
             - lcov
       env:
-        - MATRIX_EVAL=""
+        - MATRIX_EVAL="Name=MacOS GCC"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
@@ -74,7 +96,7 @@ matrix:
     #
     - os: linux
       env:
-        - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
+        - MATRIX_EVAL="Name=ClangTidy && CC=clang-7 && CXX=clang++-7"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_clang_tidy.sh"
       addons:
@@ -92,7 +114,7 @@ matrix:
     #
     - os: linux
       env:
-        - MATRIX_EVAL="CC=clang-7 && CXX=clang++-7"
+        - MATRIX_EVAL="Name=ClangFromat && CC=clang-7 && CXX=clang++-7"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_clang_format.sh"
       addons:
