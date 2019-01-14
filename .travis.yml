@@ -32,7 +32,7 @@ matrix:
         - arduino --install-boards esp8266:esp8266
         - arduino --board esp8266:esp8266:generic --save-prefs
       script:
-        - arduino --verify --board arduino:esp8266:esp8266 $PWD/examples/arduino/bip39.ino
+        - arduino --verify --board esp8266:esp8266:generic $PWD/examples/arduino/bip39.ino
   
     - os: linux
       dist: trusty
