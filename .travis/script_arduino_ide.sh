@@ -1,0 +1,2 @@
+build_platform esp8266
+build_platform esp32
