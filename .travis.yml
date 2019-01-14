@@ -46,7 +46,7 @@ matrix:
             - lcov
             
       env:
-        - MATRIX_EVAL="Name=GCC 7 && CC=gcc-7 && CXX=g++-7"
+        - MATRIX_EVAL="Name=GCC7 && CC=gcc-7 && CXX=g++-7"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
@@ -63,7 +63,7 @@ matrix:
             - libstdc++-7-dev
             - lcov
       env:
-        - MATRIX_EVAL="Name=Clang 7 && CC=clang-7 && CXX=clang++-7"
+        - MATRIX_EVAL="Name=Clang7 && CC=clang-7 && CXX=clang++-7"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
@@ -76,7 +76,7 @@ matrix:
             - lcov
       env:
         - COMPILER=clang++
-        - MATRIX_EVAL="Name=MacOS Clang"
+        - MATRIX_EVAL="Name=MacOS_Clang"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
@@ -87,7 +87,7 @@ matrix:
           packages:
             - lcov
       env:
-        - MATRIX_EVAL="Name=MacOS GCC"
+        - MATRIX_EVAL="Name=MacOS_GCC"
         - INSTALL_SCRIPT=""
         - BUILD_SCRIPT="./.travis/script_desktop.sh"
         
