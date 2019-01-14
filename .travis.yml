@@ -27,11 +27,8 @@ matrix:
       
       env:
         - MATRIX_EVAL="Name=ArduinoIDE"
-        - INSTALL_SCRIPT=""
+        - INSTALL_SCRIPT="source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)"
         - BUILD_SCRIPT="./.travis/script_arduino_ide.sh"
-        
-      before_install:
-        - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
   
     - os: linux
       dist: trusty
