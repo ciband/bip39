@@ -28,6 +28,9 @@ matrix:
       #install:
         #- ln -s $PWD /usr/local/share/arduino/libraries/Adafruit_FONA
        # - arduino --install-library "Adafruit SleepyDog Library,Adafruit MQTT Library"
+        - arduino --pref "boardsmanager.additional.urls=http://arduino.esp8266.com/stable/package_esp8266com_index.json" --save-prefs
+        - arduino --install-boards esp8266:esp8266
+        - arduino --board esp8266:esp8266:generic --save-prefs
       script:
         - arduino --verify --board arduino:esp8266:esp8266 $PWD/examples/arduino/bip39.ino
   
