@@ -1,6 +1,8 @@
 #if (defined PLATFORMIO && defined UNIT_TEST)
 
-#include <AUnit.h>
+#include "gtest/gtest.h"
+
+#include <Arduino.h>
 
 void setup() {
     Serial.begin(115200);
@@ -8,11 +10,11 @@ void setup() {
     while (!Serial) { delay(100); };
     // ^for the Arduino Leonardo/Micro only
 
-    aunit::TestRunner::setTimeout(0);
+    testing::InitGoogleTest();
 
     delay(1000);
 }
 
-void loop() { aunit::TestRunner::run(); }
+void loop() { RUN_ALL_TESTS(); }
 
 #endif
